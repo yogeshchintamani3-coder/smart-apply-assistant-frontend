@@ -1,0 +1,48 @@
+<div class="glass" style="padding: 2rem; margin-bottom: 2rem;">
+  <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+    <h2 style="color: var(--secondary);">Application Tracker Dashboard</h2>
+    <button class="btn btn-secondary" (click)="refresh()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">↻ Refresh</span>
+      <span *ngIf="isLoading">Loading...</span>
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+    Loading applications...
+  </div>
+
+  <div *ngIf="!isLoading && applications.length === 0" style="text-align: center; padding: 3rem; color: var(--text-muted); border: 1px dashed var(--surface-hover); border-radius: var(--radius-lg);">
+    No applications tracked yet. Use the Smart Job Matching tool to find and apply for jobs!
+  </div>
+
+  <div *ngIf="!isLoading && applications.length > 0" style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--surface-hover);">
+          <th style="padding: 1rem 0; color: var(--text-muted); font-weight: 500;">Role</th>
+          <th style="padding: 1rem 0; color: var(--text-muted); font-weight: 500;">Company</th>
+          <th style="padding: 1rem 0; color: var(--text-muted); font-weight: 500;">Location</th>
+          <th style="padding: 1rem 0; color: var(--text-muted); font-weight: 500;">Date Applied</th>
+          <th style="padding: 1rem 0; color: var(--text-muted); font-weight: 500;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let app of applications" style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+          <td style="padding: 1rem 0; font-weight: 500;">{{ app.jobTitle }}</td>
+          <td style="padding: 1rem 0; color: var(--text-muted);">{{ app.company }}</td>
+          <td style="padding: 1rem 0; color: var(--text-muted);">{{ app.location }}</td>
+          <td style="padding: 1rem 0; color: var(--text-muted);">{{ app.appliedAt | date:'mediumDate' }}</td>
+          <td style="padding: 1rem 0;">
+            <span style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;" 
+                  [ngStyle]="{
+                    'background-color': app.status === 'Applied' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(79, 70, 229, 0.1)',
+                    'color': app.status === 'Applied' ? '#10B981' : '#8B5CF6'
+                  }">
+              {{ app.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

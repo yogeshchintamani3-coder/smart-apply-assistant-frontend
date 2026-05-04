@@ -1,0 +1,50 @@
+<div class="glass" style="padding: 2rem; margin-bottom: 2rem;">
+  <h2 style="margin-bottom: 1.5rem; color: #8B5CF6;">AI Resume Customization</h2>
+
+  <div *ngIf="errorMsg" class="glass" style="background: rgba(239, 68, 68, 0.1); border-color: var(--danger); color: var(--danger); padding: 1rem; margin-bottom: 1rem;">
+    {{ errorMsg }}
+  </div>
+
+  <div class="input-group">
+    <label class="input-label">Select Base Resume</label>
+    <select [(ngModel)]="selectedResumeId" class="input-field">
+      <option [ngValue]="null">-- Select a resume --</option>
+      <option *ngFor="let resume of resumes" [value]="resume.id">{{ resume.name }} ({{ resume.uploadedAt | date:'shortDate' }})</option>
+    </select>
+  </div>
+
+  <div class="input-group">
+    <label class="input-label">Paste Job Description</label>
+    <textarea [(ngModel)]="jobDescription" class="input-field" rows="6" placeholder="Paste the full job description here..."></textarea>
+  </div>
+
+  <div class="flex" style="gap: 1rem; margin-bottom: 2rem;">
+    <button class="btn btn-primary" (click)="generateTailoredResume()" [disabled]="isGeneratingResume || !selectedResumeId || !jobDescription" style="flex: 1; background-color: #8B5CF6;">
+      <span *ngIf="!isGeneratingResume">✨ Tailor Resume</span>
+      <span *ngIf="isGeneratingResume">Generating...</span>
+    </button>
+    <button class="btn btn-secondary" (click)="generateCoverLetter()" [disabled]="isGeneratingCoverLetter || !selectedResumeId || !jobDescription" style="flex: 1; border-color: #8B5CF6; color: #8B5CF6;">
+      <span *ngIf="!isGeneratingCoverLetter">✉️ Generate Cover Letter</span>
+      <span *ngIf="isGeneratingCoverLetter">Generating...</span>
+    </button>
+  </div>
+
+  <!-- Results Section -->
+  <div *ngIf="tailoredResumeResult || coverLetterResult" style="border-top: 1px solid var(--surface-hover); padding-top: 1.5rem;">
+    
+    <div *ngIf="tailoredResumeResult" style="margin-bottom: 2rem;">
+      <h3 style="margin-bottom: 0.5rem; color: var(--text-main);">Tailored Resume</h3>
+      <div class="glass" style="padding: 1rem; background: rgba(15, 23, 42, 0.5); font-family: monospace; white-space: pre-wrap; font-size: 0.875rem;">
+        {{ tailoredResumeResult }}
+      </div>
+    </div>
+
+    <div *ngIf="coverLetterResult">
+      <h3 style="margin-bottom: 0.5rem; color: var(--text-main);">Cover Letter</h3>
+      <div class="glass" style="padding: 1rem; background: rgba(15, 23, 42, 0.5); font-family: monospace; white-space: pre-wrap; font-size: 0.875rem;">
+        {{ coverLetterResult }}
+      </div>
+    </div>
+
+  </div>
+</div>

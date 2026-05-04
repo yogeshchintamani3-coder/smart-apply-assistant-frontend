@@ -1,0 +1,68 @@
+<div class="glass" style="padding: 2rem; margin-bottom: 2rem;">
+  <h2 style="margin-bottom: 1.5rem; color: var(--secondary);">Job Preferences</h2>
+  
+  <div *ngIf="successMessage" class="glass" style="background: rgba(16, 185, 129, 0.1); border-color: var(--secondary); color: var(--secondary); padding: 1rem; margin-bottom: 1rem;">
+    {{ successMessage }}
+  </div>
+
+  <form [formGroup]="prefForm" (ngSubmit)="savePreferences()">
+    <div class="input-group">
+      <label class="input-label">Target Roles (e.g., Frontend Developer, Backend Engineer)</label>
+      <input type="text" formControlName="roles" class="input-field" placeholder="Roles separated by commas">
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Target Locations (e.g., Remote, New York, London)</label>
+      <input type="text" formControlName="locations" class="input-field" placeholder="Locations separated by commas">
+    </div>
+
+    <div class="flex justify-between" style="gap: 1rem;">
+      <div class="input-group" style="flex: 1;">
+        <label class="input-label">Experience Level</label>
+        <select formControlName="experienceLevel" class="input-field">
+          <option value="">Select Level</option>
+          <option value="Entry-level">Entry-level</option>
+          <option value="Mid-level">Mid-level</option>
+          <option value="Senior">Senior</option>
+          <option value="Director">Director</option>
+        </select>
+      </div>
+
+      <div class="input-group" style="flex: 1;">
+        <label class="input-label">Job Types</label>
+        <select formControlName="jobTypes" class="input-field">
+          <option value="">Select Type</option>
+          <option value="Full-time">Full-time</option>
+          <option value="Contract">Contract</option>
+          <option value="Part-time">Part-time</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="glass" style="margin-top: 1.5rem; padding: 1.5rem; border: 1px solid rgba(59, 130, 246, 0.3);">
+      <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.1rem;">Naukri.com Credentials</h3>
+      <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1rem;">Provide your Naukri account details for automated applications.</p>
+      
+      <div class="input-group">
+        <label class="input-label">Naukri Email</label>
+        <input type="email" formControlName="naukriEmail" class="input-field" placeholder="your-email@example.com">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Naukri Password</label>
+        <input type="password" formControlName="naukriPassword" class="input-field" placeholder="Enter password">
+      </div>
+
+      <div class="flex items-center" style="gap: 1rem; margin-top: 1rem;">
+        <label class="input-label" style="margin-bottom: 0; cursor: pointer;">
+          <input type="checkbox" formControlName="autoApplyEnabled" style="width: 1.2rem; height: 1.2rem; margin-right: 0.5rem; vertical-align: middle;">
+          Enable Daily Auto-Apply
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="prefForm.invalid || isSaving" style="width: 100%; margin-top: 1rem;">
+      {{ isSaving ? 'Saving...' : 'Save Preferences' }}
+    </button>
+  </form>
+</div>

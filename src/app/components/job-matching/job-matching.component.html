@@ -1,0 +1,53 @@
+<div class="glass" style="padding: 2rem; margin-bottom: 2rem;">
+  <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+    <h2 style="color: var(--primary);">Smart Job Matching</h2>
+    <button class="btn btn-primary" (click)="fetchJobs()" [disabled]="isLoading">
+      {{ isLoading ? 'Scraping Jobs...' : 'Find Jobs' }}
+    </button>
+  </div>
+
+  <div *ngIf="applicationMessage" class="glass" style="background: rgba(16, 185, 129, 0.1); border-color: var(--secondary); color: var(--secondary); padding: 1rem; margin-bottom: 1.5rem; text-align: center;">
+    {{ applicationMessage }}
+  </div>
+
+  <div *ngIf="jobs.length === 0 && !isLoading" style="text-align: center; padding: 3rem; color: var(--text-muted); border: 1px dashed var(--surface-hover); border-radius: var(--radius-lg);">
+    Click "Find Jobs" to run the scraper and find opportunities matching your preferences.
+  </div>
+
+  <div *ngIf="isLoading" style="text-align: center; padding: 2rem;">
+    <div style="color: var(--text-muted);">Running WebDriver and scraping platforms...</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+    <div *ngFor="let job of jobs; let i = index" class="glass" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; background: rgba(30, 41, 59, 0.4); border-color: rgba(255, 255, 255, 0.05); transition: transform var(--transition-fast);">
+      
+      <div style="margin-bottom: 1rem;">
+        <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem; color: var(--text-main);">{{ job.title }}</h3>
+        <div style="font-weight: 500; color: var(--primary); margin-bottom: 0.5rem;">{{ job.company }} &bull; {{ job.location }}</div>
+        <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.4;">{{ job.descriptionSnippet }}</p>
+      </div>
+
+      <div class="flex items-center justify-between" style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 1rem;">
+        <a [href]="job.url" target="_blank" style="color: var(--text-muted); font-size: 0.875rem; text-decoration: none; display: flex; align-items: center; gap: 0.25rem;">
+          View Source
+        </a>
+        
+        <button 
+          class="btn" 
+          [ngClass]="appliedTo.has(i) ? 'btn-secondary' : 'btn-primary'"
+          [disabled]="applyingTo.has(i) || appliedTo.has(i)" 
+          (click)="autoApply(job, i)"
+          style="min-width: 120px;"
+          [style.backgroundColor]="appliedTo.has(i) ? 'transparent' : '#10B981'"
+          [style.borderColor]="appliedTo.has(i) ? '#10B981' : 'transparent'"
+          [style.color]="appliedTo.has(i) ? '#10B981' : 'white'">
+          
+          <span *ngIf="applyingTo.has(i)">Applying...</span>
+          <span *ngIf="appliedTo.has(i)">Applied ✓</span>
+          <span *ngIf="!applyingTo.has(i) && !appliedTo.has(i)">⚡ Auto Apply</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

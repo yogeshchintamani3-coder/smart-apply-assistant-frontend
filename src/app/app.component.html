@@ -1,0 +1,37 @@
+<div class="container" style="padding-top: 3rem; padding-bottom: 3rem;">
+  <header style="margin-bottom: 3rem; text-align: center;">
+    <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
+      <span style="color: var(--primary);">Smart</span> Apply Assistant
+    </h1>
+    <p style="color: var(--text-muted); font-size: 1.125rem;">Intelligent Job Auto Application System</p>
+  </header>
+
+  <main>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+      <!-- Profile setup section -->
+      <section>
+        <app-resume-upload></app-resume-upload>
+      </section>
+      
+      <!-- Preferences section -->
+      <section>
+        <app-preferences></app-preferences>
+      </section>
+    </div>
+
+    <!-- AI Tailoring section -->
+    <section style="margin-bottom: 2rem;">
+      <app-ai-tailoring></app-ai-tailoring>
+    </section>
+
+    <!-- Job Matching & Auto Apply Section -->
+    <section style="margin-bottom: 2rem;">
+      <app-job-matching></app-job-matching>
+    </section>
+
+    <!-- Application Tracker Section -->
+    <section>
+      <app-application-tracker></app-application-tracker>
+    </section>
+  </main>
+</div>
